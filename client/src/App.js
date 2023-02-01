@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 function App() {
-  const [tasks, setTasks] = useState("Empty");
+  const [tasks, setTasks] = useState(["Empty"]);
 
   useEffect(() => {
     fetch("http://localhost:5000/")
@@ -13,7 +13,11 @@ function App() {
 
   return (
     <div className="App">
-      <p>{tasks}</p>
+      <ul>
+        {tasks.map((task) => (
+          <li>{task}</li>
+        ))}
+      </ul>
     </div>
   );
 }
