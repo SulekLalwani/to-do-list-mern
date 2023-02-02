@@ -26,13 +26,28 @@ function App() {
     });
   }
 
-  console.log("Render Component");
+  function deleteTask(index) {
+    fetch("http://localhost:5000", {
+      method: "DELETE",
+      headers: { "Content-type": "application/json" },
+      body: JSON.stringify({ taskToDelete: index }),
+    }).then((res) => {
+      if (res.status === 200) {
+        const newTasks = [...tasks];
+        newTasks.splice(index, 1);
+        setTasks(newTasks);
+      }
+    });
+  }
 
   return (
     <div className="App">
       <ul>
-        {tasks.map((task) => (
-          <li>{task}</li>
+        {tasks.map((task, index) => (
+          <li>
+            <p>{task}</p>{" "}
+            <button onClick={() => deleteTask(index)}>Delete</button>
+          </li>
         ))}
       </ul>
       <form onSubmit={addTask}>
