@@ -11,8 +11,12 @@ app.get("/", (req, res) => {
 });
 
 app.post("/", (req, res) => {
-  tasks.push(req.body.newTask);
-  res.sendStatus(202);
+  if (req.body.newTask.length > 0) {
+    tasks.push(req.body.newTask);
+    res.sendStatus(202);
+  } else {
+    res.sendStatus(400);
+  }
 });
 
 app.listen(5000);
