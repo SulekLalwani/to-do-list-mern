@@ -24,4 +24,9 @@ app.delete("/", (req, res) => {
   res.sendStatus(200);
 });
 
+app.put("/", (req, res) => {
+  tasks[req.body.taskToEdit] = req.body.edit;
+  res.sendStatus(200);
+});
+
 app.listen(5000);
