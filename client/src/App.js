@@ -26,6 +26,8 @@ function App() {
     });
   }
 
+  console.log("Render Component");
+
   return (
     <div className="App">
       <ul>

@@ -19,4 +19,9 @@ app.post("/", (req, res) => {
   }
 });
 
+app.delete("/", (req, res) => {
+  tasks.splice(req.body.taskToDelete, 1);
+  res.sendStatus(200);
+});
+
 app.listen(5000);
