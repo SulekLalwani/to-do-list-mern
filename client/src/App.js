@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 
 function App() {
   const [tasks, setTasks] = useState(["Empty"]);
+  const [addingTask, setAddingTask] = useState(false);
   const [editingTask, setEditingTask] = useState([]);
 
   useEffect(() => {
@@ -18,7 +19,14 @@ function App() {
     setEditingTask(newEditingTask);
   }, [tasks]);
 
-  function addTask(event) {
+  function addTask() {
+    setAddingTask(true);
+    const newEditingTask = [];
+    tasks.map(() => newEditingTask.push(false));
+    setEditingTask(newEditingTask);
+  }
+
+  function acceptAddition(event) {
     event.preventDefault();
     const newTaskInput = event.target.elements.newTask;
     fetch("http://localhost:5000/", {
@@ -29,6 +37,7 @@ function App() {
       if (res.status === 202) {
         setTasks([...tasks, newTaskInput.value]);
         newTaskInput.value = "";
+        setAddingTask(false);
       }
     });
   }
@@ -43,6 +52,7 @@ function App() {
         const newTasks = [...tasks];
         newTasks.splice(index, 1);
         setTasks(newTasks);
+        setAddingTask(false);
       }
     });
   }
@@ -52,6 +62,7 @@ function App() {
     tasks.map(() => newEditingTask.push(false));
     newEditingTask[index] = true;
     setEditingTask(newEditingTask);
+    setAddingTask(false);
   }
 
   function cancelEdit(index) {
@@ -108,10 +119,16 @@ function App() {
             </form>
           </li>
         ))}
+        <li hidden={!addingTask}>
+          <form onSubmit={acceptAddition}>
+            <input name="newTask"></input> <button>Accept</button>{" "}
+            <button type="button" onClick={() => setAddingTask(false)}>
+              Cancel
+            </button>
+          </form>
+        </li>
       </ul>
-      <form onSubmit={addTask}>
-        <input name="newTask"></input>
-      </form>
+      <button onClick={addTask}>Add</button>
     </div>
   );
 }
