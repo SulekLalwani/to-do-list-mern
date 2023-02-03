@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 function App() {
-  const [tasks, setTasks] = useState(["Empty"]);
+  const [tasks, setTasks] = useState([]);
   const [addingTask, setAddingTask] = useState(false);
   const [editingTask, setEditingTask] = useState([]);
 
