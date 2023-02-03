@@ -78,11 +78,13 @@ function App() {
       method: "PUT",
       headers: { "Content-type": "application/json" },
       body: JSON.stringify({ taskToEdit: index, edit: editedTaskInput.value }),
+    }).then((res) => {
+      if (res.status === 200) {
+        const newTasks = [...tasks];
+        newTasks[index] = editedTaskInput.value;
+        setTasks(newTasks);
+      }
     });
-
-    const newTasks = [...tasks];
-    newTasks[index] = editedTaskInput.value;
-    setTasks(newTasks);
   }
 
   return (

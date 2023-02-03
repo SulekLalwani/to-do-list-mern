@@ -25,8 +25,12 @@ app.delete("/", (req, res) => {
 });
 
 app.put("/", (req, res) => {
-  tasks[req.body.taskToEdit] = req.body.edit;
-  res.sendStatus(200);
+  if (req.body.edit.length > 0) {
+    tasks[req.body.taskToEdit] = req.body.edit;
+    res.sendStatus(200);
+  } else {
+    res.sendStatus(400);
+  }
 });
 
 app.listen(5000);
