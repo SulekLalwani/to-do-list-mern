@@ -2,7 +2,15 @@ body {
   background: rgb(36, 36, 36);
 }
 
+.App {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 30px;
+}
+
 .taskList {
+  width: 100%;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
