@@ -1,3 +1,35 @@
 body {
   background: rgb(36, 36, 36);
 }
+
+.taskList {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px;
+}
+
+.task {
+  display: flex;
+  flex-wrap: nowrap;
+  background-color: grey;
+  width: 90%;
+  border-radius: 5px;
+  padding: 15px;
+}
+
+.task > div {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.task > div > p {
+  margin: 0;
+}
+
+.task > form {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}

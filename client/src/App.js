@@ -90,47 +90,47 @@ function App() {
 
   return (
     <div className="App">
-      <ul>
+      <div className="taskList">
         {tasks.map((task, index) => (
-          <li>
-            <div>
-              <p hidden={editingTask[index]}>{task}</p>
-              <button
-                hidden={editingTask[index]}
-                onClick={() => editTask(index)}
-              >
-                Edit
-              </button>{" "}
-              <button
-                hidden={editingTask[index]}
-                onClick={() => deleteTask(index)}
-              >
-                Delete
-              </button>
+          <div className="task">
+            <div style={{ display: editingTask[index] ? "none" : "flex" }}>
+              <p>{task}</p>
+              <div>
+                <button onClick={() => editTask(index)}>Edit</button>{" "}
+                <button onClick={() => deleteTask(index)}>Delete</button>
+              </div>
             </div>
             <form
               onSubmit={(event) => {
                 acceptEdit(event, index);
               }}
-              hidden={!editingTask[index]}
+              style={{ display: !editingTask[index] ? "none" : "flex" }}
             >
               <input defaultValue={task} name="editTask"></input>{" "}
+              <div>
+                <button>Accept</button>{" "}
+                <button type="button" onClick={() => cancelEdit(index)}>
+                  Cancel
+                </button>
+              </div>
+            </form>
+          </div>
+        ))}
+        <div
+          style={{ display: !addingTask ? "none" : "flex" }}
+          className="task"
+        >
+          <form onSubmit={acceptAddition}>
+            <input name="newTask"></input>
+            <div>
               <button>Accept</button>{" "}
-              <button type="button" onClick={() => cancelEdit(index)}>
+              <button type="button" onClick={() => setAddingTask(false)}>
                 Cancel
               </button>
-            </form>
-          </li>
-        ))}
-        <li hidden={!addingTask}>
-          <form onSubmit={acceptAddition}>
-            <input name="newTask"></input> <button>Accept</button>{" "}
-            <button type="button" onClick={() => setAddingTask(false)}>
-              Cancel
-            </button>
+            </div>
           </form>
-        </li>
-      </ul>
+        </div>
+      </div>
       <button onClick={addTask}>Add</button>
     </div>
   );
