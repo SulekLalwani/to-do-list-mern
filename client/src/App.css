@@ -36,7 +36,37 @@ body {
 button {
   aspect-ratio: 1;
   height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
 }
+
+.addButton i {
+  content: url(./icons/add.svg);
+  height: 100%;
+}
+
+.editButton i {
+  content: url(./icons/edit.svg);
+  height: 100%;
+}
+
+.deleteButton i {
+  content: url(./icons/delete.svg);
+  height: 90%;
+}
+
+.acceptButton i {
+  content: url(./icons/accept.svg);
+  height: 100%;
+}
+
+.cancelButton i {
+  content: url(./icons/cancel.svg);
+  height: 70%;
+}
+
 .task > div > p {
   margin: 0;
 }

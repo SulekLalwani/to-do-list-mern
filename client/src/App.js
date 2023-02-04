@@ -96,8 +96,15 @@ function App() {
             <div style={{ display: editingTask[index] ? "none" : "flex" }}>
               <p>{task}</p>
               <div>
-                <button onClick={() => editTask(index)}></button>{" "}
-                <button onClick={() => deleteTask(index)}></button>
+                <button className="editButton" onClick={() => editTask(index)}>
+                  <i></i>
+                </button>{" "}
+                <button
+                  className="deleteButton"
+                  onClick={() => deleteTask(index)}
+                >
+                  <i></i>
+                </button>
               </div>
             </div>
             <form
@@ -108,11 +115,16 @@ function App() {
             >
               <input defaultValue={task} name="editTask"></input>{" "}
               <div>
-                <button></button>{" "}
+                <button className="acceptButton">
+                  <i></i>
+                </button>{" "}
                 <button
+                  className="cancelButton"
                   type="button"
                   onClick={() => cancelEdit(index)}
-                ></button>
+                >
+                  <i></i>
+                </button>
               </div>
             </form>
           </div>
@@ -124,16 +136,23 @@ function App() {
           <form onSubmit={acceptAddition}>
             <input name="newTask"></input>
             <div>
-              <button></button>{" "}
+              <button className="acceptButton">
+                <i></i>
+              </button>{" "}
               <button
+                className="cancelButton"
                 type="button"
                 onClick={() => setAddingTask(false)}
-              ></button>
+              >
+                <i></i>
+              </button>
             </div>
           </form>
         </div>
       </div>
-      <button onClick={addTask}></button>
+      <button onClick={addTask} className="addButton">
+        <i></i>
+      </button>
     </div>
   );
 }
