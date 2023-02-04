@@ -39,5 +39,10 @@ body {
 .task > form {
   width: 100%;
   display: flex;
+  gap: 5px;
   justify-content: space-between;
+}
+
+.task > form > input {
+  flex-grow: 1;
 }
