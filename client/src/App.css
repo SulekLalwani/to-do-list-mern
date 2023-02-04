@@ -30,10 +30,20 @@ body {
   width: 100%;
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 
+button {
+  aspect-ratio: 1;
+  height: 30px;
+}
 .task > div > p {
   margin: 0;
+}
+
+.task > div > div {
+  display: flex;
+  gap: 4px;
 }
 
 .task > form {
@@ -41,8 +51,14 @@ body {
   display: flex;
   gap: 5px;
   justify-content: space-between;
+  align-items: center;
 }
 
 .task > form > input {
   flex-grow: 1;
+}
+
+.task > form > div {
+  display: flex;
+  gap: 4px;
 }

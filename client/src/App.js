@@ -96,8 +96,8 @@ function App() {
             <div style={{ display: editingTask[index] ? "none" : "flex" }}>
               <p>{task}</p>
               <div>
-                <button onClick={() => editTask(index)}>Edit</button>{" "}
-                <button onClick={() => deleteTask(index)}>Delete</button>
+                <button onClick={() => editTask(index)}></button>{" "}
+                <button onClick={() => deleteTask(index)}></button>
               </div>
             </div>
             <form
@@ -108,10 +108,11 @@ function App() {
             >
               <input defaultValue={task} name="editTask"></input>{" "}
               <div>
-                <button>Accept</button>{" "}
-                <button type="button" onClick={() => cancelEdit(index)}>
-                  Cancel
-                </button>
+                <button></button>{" "}
+                <button
+                  type="button"
+                  onClick={() => cancelEdit(index)}
+                ></button>
               </div>
             </form>
           </div>
@@ -123,15 +124,16 @@ function App() {
           <form onSubmit={acceptAddition}>
             <input name="newTask"></input>
             <div>
-              <button>Accept</button>{" "}
-              <button type="button" onClick={() => setAddingTask(false)}>
-                Cancel
-              </button>
+              <button></button>{" "}
+              <button
+                type="button"
+                onClick={() => setAddingTask(false)}
+              ></button>
             </div>
           </form>
         </div>
       </div>
-      <button onClick={addTask}>Add</button>
+      <button onClick={addTask}></button>
     </div>
   );
 }
