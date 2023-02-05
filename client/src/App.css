@@ -21,7 +21,7 @@ body {
 .task {
   display: flex;
   flex-wrap: nowrap;
-  background-color: grey;
+  background-color: rgb(60, 60, 60);
   width: 90%;
   border-radius: 5px;
   padding: 15px;
