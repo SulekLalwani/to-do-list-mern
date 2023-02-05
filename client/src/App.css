@@ -121,6 +121,15 @@ button:active {
   height: 100%;
   box-sizing: border-box;
   font-size: 16px;
+  background-color: gray;
+  border: 0;
+  border-radius: 5px;
+  color: white;
+  padding-left: 5px;
+}
+
+.task > form > input:focus {
+  outline: none;
 }
 
 .task > form > div {

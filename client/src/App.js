@@ -113,7 +113,11 @@ function App() {
               }}
               style={{ display: !editingTask[index] ? "none" : "flex" }}
             >
-              <input defaultValue={task} name="editTask"></input>{" "}
+              <input
+                defaultValue={task}
+                name="editTask"
+                placeholder="Enter task"
+              ></input>{" "}
               <div>
                 <button className="acceptButton">
                   <i></i>
@@ -134,7 +138,7 @@ function App() {
           className="task"
         >
           <form onSubmit={acceptAddition}>
-            <input name="newTask"></input>
+            <input name="newTask" placeholder="Enter task"></input>
             <div>
               <button className="acceptButton">
                 <i></i>
