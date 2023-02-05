@@ -5,6 +5,7 @@ function App() {
   const [tasks, setTasks] = useState([]);
   const [addingTask, setAddingTask] = useState(false);
   const [editingTask, setEditingTask] = useState([]);
+  const [invalidInput, setInvalidInput] = useState(false);
 
   useEffect(() => {
     fetch("http://localhost:5000/")
@@ -25,6 +26,7 @@ function App() {
     const newEditingTask = [];
     tasks.map(() => newEditingTask.push(false));
     setEditingTask(newEditingTask);
+    setInvalidInput(false);
   }
 
   function acceptAddition(event) {
@@ -39,6 +41,9 @@ function App() {
         setTasks([...tasks, newTaskInput.value]);
         newTaskInput.value = "";
         setAddingTask(false);
+        setInvalidInput(false);
+      } else {
+        setInvalidInput(true);
       }
     });
   }
@@ -54,6 +59,7 @@ function App() {
         newTasks.splice(index, 1);
         setTasks(newTasks);
         setAddingTask(false);
+        setInvalidInput(false);
       }
     });
   }
@@ -64,12 +70,14 @@ function App() {
     newEditingTask[index] = true;
     setEditingTask(newEditingTask);
     setAddingTask(false);
+    setInvalidInput(false);
   }
 
   function cancelEdit(index) {
     const newEditingTask = [...editingTask];
     newEditingTask[index] = false;
     setEditingTask(newEditingTask);
+    setInvalidInput(false);
   }
 
   function acceptEdit(event, index) {
@@ -84,6 +92,8 @@ function App() {
         const newTasks = [...tasks];
         newTasks[index] = editedTaskInput.value;
         setTasks(newTasks);
+      } else {
+        setInvalidInput(true);
       }
     });
   }
@@ -117,6 +127,7 @@ function App() {
                 defaultValue={task}
                 name="editTask"
                 placeholder="Enter task"
+                style={{ outline: invalidInput ? "1px red solid" : "none" }}
               ></input>{" "}
               <div>
                 <button className="acceptButton">
@@ -138,7 +149,11 @@ function App() {
           className="task"
         >
           <form onSubmit={acceptAddition}>
-            <input name="newTask" placeholder="Enter task"></input>
+            <input
+              name="newTask"
+              placeholder="Enter task"
+              style={{ outline: invalidInput ? "1px red solid" : "none" }}
+            ></input>
             <div>
               <button className="acceptButton">
                 <i></i>
@@ -146,7 +161,10 @@ function App() {
               <button
                 className="cancelButton"
                 type="button"
-                onClick={() => setAddingTask(false)}
+                onClick={() => {
+                  setAddingTask(false);
+                  setInvalidInput(false);
+                }}
               >
                 <i></i>
               </button>
