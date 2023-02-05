@@ -41,6 +41,20 @@ button {
   justify-content: center;
   align-items: center;
   padding: 0;
+  border: 0 solid;
+  border-radius: 5px;
+}
+
+button:hover {
+  filter: brightness(80%);
+}
+
+button:active {
+  filter: brightness(60%);
+}
+
+.addButton {
+  background-color: rgb(87, 157, 232);
 }
 
 .addButton i {
@@ -48,9 +62,17 @@ button {
   height: 100%;
 }
 
+.editButton {
+  background-color: rgb(200, 186, 60);
+}
+
 .editButton i {
   content: url(./icons/edit.svg);
   height: 100%;
+}
+
+.deleteButton {
+  background-color: rgb(227, 54, 54);
 }
 
 .deleteButton i {
@@ -58,9 +80,17 @@ button {
   height: 90%;
 }
 
+.acceptButton {
+  background-color: rgb(55, 198, 55);
+}
+
 .acceptButton i {
   content: url(./icons/accept.svg);
   height: 100%;
+}
+
+.cancelButton {
+  background-color: rgb(227, 54, 54);
 }
 
 .cancelButton i {
