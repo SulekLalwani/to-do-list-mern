@@ -3,6 +3,7 @@ import "./App.css";
 
 function App() {
   const [tasks, setTasks] = useState([]);
+  const [edit, setEdit] = useState("");
   const [addingTask, setAddingTask] = useState(false);
   const [editingTask, setEditingTask] = useState([]);
   const [invalidInput, setInvalidInput] = useState(false);
@@ -71,6 +72,7 @@ function App() {
     setEditingTask(newEditingTask);
     setAddingTask(false);
     setInvalidInput(false);
+    setEdit(tasks[index]);
   }
 
   function cancelEdit(index) {
@@ -82,15 +84,14 @@ function App() {
 
   function acceptEdit(event, index) {
     event.preventDefault();
-    const editedTaskInput = event.target.elements.editTask;
     fetch("http://localhost:5000", {
       method: "PUT",
       headers: { "Content-type": "application/json" },
-      body: JSON.stringify({ taskToEdit: index, edit: editedTaskInput.value }),
+      body: JSON.stringify({ taskToEdit: index, edit: edit }),
     }).then((res) => {
       if (res.status === 200) {
         const newTasks = [...tasks];
-        newTasks[index] = editedTaskInput.value;
+        newTasks[index] = edit;
         setTasks(newTasks);
       } else {
         setInvalidInput(true);
@@ -124,7 +125,10 @@ function App() {
               style={{ display: !editingTask[index] ? "none" : "flex" }}
             >
               <input
-                defaultValue={task}
+                value={edit}
+                onChange={(event) => {
+                  setEdit(event.target.value);
+                }}
                 name="editTask"
                 placeholder="Enter task"
                 style={{ outline: invalidInput ? "1px red solid" : "none" }}
