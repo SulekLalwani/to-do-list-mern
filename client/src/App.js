@@ -99,6 +99,8 @@ function App() {
     });
   }
 
+  console.log("Render component");
+
   return (
     <div className="App">
       <div className="taskList">

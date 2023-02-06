@@ -2,17 +2,21 @@ body {
   background: rgb(36, 36, 36);
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   color: white;
+  padding-top: 16px;
 }
 
 .App {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 30px;
+  gap: 55px;
+  flex-direction: column;
+  align-content: center;
+  align-items: center;
 }
 
 .taskList {
-  width: 100%;
+  width: 95%;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -23,9 +27,9 @@ body {
   display: flex;
   flex-wrap: nowrap;
   background-color: rgb(60, 60, 60);
-  width: 90%;
+  width: 100%;
   border-radius: 5px;
-  padding: 15px;
+  padding: 12px 15px;
 }
 
 .task > div {
@@ -37,7 +41,7 @@ body {
 
 button {
   aspect-ratio: 1;
-  height: 30px;
+  height: 40px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -105,18 +109,19 @@ button:active {
 
 .task > div > div {
   display: flex;
-  gap: 4px;
+  gap: 10px;
 }
 
 .task > form {
   width: 100%;
   display: flex;
-  gap: 5px;
+  gap: 12px;
   justify-content: space-between;
   align-items: center;
 }
 
 .task > form > input {
+  width: 0;
   flex-grow: 1;
   height: 100%;
   box-sizing: border-box;
@@ -125,7 +130,7 @@ button:active {
   border: 0;
   border-radius: 5px;
   color: white;
-  padding-left: 5px;
+  padding-left: 8px;
 }
 
 .task > form > input:focus {
@@ -134,5 +139,5 @@ button:active {
 
 .task > form > div {
   display: flex;
-  gap: 4px;
+  gap: 10px;
 }
