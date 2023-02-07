@@ -22,6 +22,16 @@ function App() {
     setEditingTask(newEditingTask);
   }, [tasks]);
 
+  useEffect(() => {
+    if (editingTask.some((value) => value === true)) {
+      document.getElementsByName("editTask")[editingTask.indexOf(true)].focus();
+    }
+  }, [editingTask]);
+
+  useEffect(() => {
+    document.getElementsByName("newTask")[0].focus();
+  }, [addingTask]);
+
   function addTask() {
     setAddingTask(true);
     const newEditingTask = [];
