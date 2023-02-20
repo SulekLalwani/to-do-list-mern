@@ -8,12 +8,10 @@ function App() {
   const [editingTask, setEditingTask] = useState([]);
   const [invalidInput, setInvalidInput] = useState(false);
 
-  useEffect(() => {
-    fetch("http://localhost:5000/")
-      .then((res) => res.json())
-      .then((data) => {
-        setTasks(data.tasks);
-      });
+  useEffect(async () => {
+    const response = await fetch("http://localhost:5000/");
+    const data = await response.json();
+    setTasks(data.tasks);
   }, []);
 
   useEffect(() => {
@@ -40,39 +38,40 @@ function App() {
     setInvalidInput(false);
   }
 
-  function acceptAddition(event) {
+  async function acceptAddition(event) {
     event.preventDefault();
     const newTaskInput = event.target.elements.newTask;
-    fetch("http://localhost:5000/", {
+
+    const response = await fetch("http://localhost:5000/", {
       method: "POST",
       headers: { "Content-type": "application/json" },
       body: JSON.stringify({ newTask: newTaskInput.value }),
-    }).then((res) => {
-      if (res.status === 202) {
-        setTasks([...tasks, newTaskInput.value]);
-        newTaskInput.value = "";
-        setAddingTask(false);
-        setInvalidInput(false);
-      } else {
-        setInvalidInput(true);
-      }
     });
+
+    if (response.status === 202) {
+      setTasks([...tasks, newTaskInput.value]);
+      newTaskInput.value = "";
+      setAddingTask(false);
+      setInvalidInput(false);
+    } else {
+      setInvalidInput(true);
+    }
   }
 
-  function deleteTask(index) {
-    fetch("http://localhost:5000", {
+  async function deleteTask(index) {
+    const response = await fetch("http://localhost:5000", {
       method: "DELETE",
       headers: { "Content-type": "application/json" },
       body: JSON.stringify({ taskToDelete: index }),
-    }).then((res) => {
-      if (res.status === 200) {
-        const newTasks = [...tasks];
-        newTasks.splice(index, 1);
-        setTasks(newTasks);
-        setAddingTask(false);
-        setInvalidInput(false);
-      }
     });
+
+    if (response.status === 200) {
+      const newTasks = [...tasks];
+      newTasks.splice(index, 1);
+      setTasks(newTasks);
+      setAddingTask(false);
+      setInvalidInput(false);
+    }
   }
 
   function editTask(index) {
@@ -92,24 +91,23 @@ function App() {
     setInvalidInput(false);
   }
 
-  function acceptEdit(event, index) {
+  async function acceptEdit(event, index) {
     event.preventDefault();
-    fetch("http://localhost:5000", {
+
+    const response = await fetch("http://localhost:5000", {
       method: "PUT",
       headers: { "Content-type": "application/json" },
       body: JSON.stringify({ taskToEdit: index, edit: edit }),
-    }).then((res) => {
-      if (res.status === 200) {
-        const newTasks = [...tasks];
-        newTasks[index] = edit;
-        setTasks(newTasks);
-      } else {
-        setInvalidInput(true);
-      }
     });
-  }
 
-  console.log("Render component");
+    if (response.status === 200) {
+      const newTasks = [...tasks];
+      newTasks[index] = edit;
+      setTasks(newTasks);
+    } else {
+      setInvalidInput(true);
+    }
+  }
 
   return (
     <div className="App">
