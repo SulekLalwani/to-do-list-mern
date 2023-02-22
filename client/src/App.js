@@ -48,8 +48,10 @@ function App() {
       body: JSON.stringify({ newTask: newTaskInput.value }),
     });
 
+    const data = await response.json();
+
     if (response.status === 202) {
-      setTasks([...tasks, newTaskInput.value]);
+      setTasks([...tasks, { _id: data.newTaskID, task: newTaskInput.value }]);
       newTaskInput.value = "";
       setAddingTask(false);
       setInvalidInput(false);
@@ -62,7 +64,7 @@ function App() {
     const response = await fetch("http://localhost:5000", {
       method: "DELETE",
       headers: { "Content-type": "application/json" },
-      body: JSON.stringify({ taskToDelete: index }),
+      body: JSON.stringify({ taskToDelete: tasks[index]._id }),
     });
 
     if (response.status === 200) {
@@ -81,7 +83,7 @@ function App() {
     setEditingTask(newEditingTask);
     setAddingTask(false);
     setInvalidInput(false);
-    setEdit(tasks[index]);
+    setEdit(tasks[index].task);
   }
 
   function cancelEdit(index) {
@@ -97,17 +99,19 @@ function App() {
     const response = await fetch("http://localhost:5000", {
       method: "PUT",
       headers: { "Content-type": "application/json" },
-      body: JSON.stringify({ taskToEdit: index, edit: edit }),
+      body: JSON.stringify({ taskToEdit: tasks[index]._id, edit: edit }),
     });
 
     if (response.status === 200) {
       const newTasks = [...tasks];
-      newTasks[index] = edit;
+      newTasks[index].task = edit;
       setTasks(newTasks);
     } else {
       setInvalidInput(true);
     }
   }
+
+  console.log(tasks);
 
   return (
     <div className="App">
@@ -115,7 +119,7 @@ function App() {
         {tasks.map((task, index) => (
           <div className="task">
             <div style={{ display: editingTask[index] ? "none" : "flex" }}>
-              <p>{task}</p>
+              <p>{task.task}</p>
               <div>
                 <button className="editButton" onClick={() => editTask(index)}>
                   <i></i>

@@ -8,15 +8,15 @@ app.use(express.json());
 mongoose.connect("mongodb://localhost/to-do-list-mern");
 
 const taskSchema = new mongoose.Schema({
-  tasks: [String],
+  task: String,
 });
 
-const Tasks = mongoose.model("tasks", taskSchema);
+const Task = mongoose.model("tasks", taskSchema);
 
 app.get("/", async (req, res) => {
   try {
-    const tasks = await Tasks.findOne();
-    res.json({ tasks: tasks.tasks });
+    const tasks = await Task.find({ task: { $exists: true } });
+    res.json({ tasks: tasks });
   } catch {
     sendStatus(500);
   }
@@ -25,8 +25,8 @@ app.get("/", async (req, res) => {
 app.post("/", async (req, res) => {
   try {
     if (req.body.newTask && req.body.newTask.length > 0) {
-      await Tasks.updateOne({ $push: { tasks: req.body.newTask } });
-      res.sendStatus(202);
+      const createdTask = await Task.create({ task: req.body.newTask });
+      res.status(202).send({ newTaskID: createdTask._id });
     } else {
       res.sendStatus(400);
     }
@@ -37,16 +37,13 @@ app.post("/", async (req, res) => {
 
 app.put("/", async (req, res) => {
   try {
-    const tasksSize = (await Tasks.findOne()).tasks.length;
-    if (
-      req.body.taskToEdit >= 0 &&
-      req.body.taskToEdit < tasksSize &&
-      req.body.edit &&
-      req.body.edit.length > 0
-    ) {
-      await Tasks.updateOne({
-        $set: { [`tasks.${req.body.taskToEdit}`]: req.body.edit },
-      });
+    if (req.body.taskToEdit && req.body.edit && req.body.edit.length > 0) {
+      await Task.updateOne(
+        { _id: req.body.taskToEdit },
+        {
+          $set: { task: req.body.edit },
+        }
+      );
       res.sendStatus(200);
     } else {
       res.sendStatus(400);
@@ -58,12 +55,8 @@ app.put("/", async (req, res) => {
 
 app.delete("/", async (req, res) => {
   try {
-    const tasksSize = (await Tasks.findOne()).tasks.length;
-    if (req.body.taskToDelete >= 0 && req.body.taskToDelete < tasksSize) {
-      await Tasks.updateOne({
-        $unset: { [`tasks.${req.body.taskToDelete}`]: "" },
-      });
-      await Tasks.updateOne({ $pull: { tasks: null } });
+    if (req.body.taskToDelete) {
+      await Task.deleteOne({ _id: req.body.taskToDelete });
       res.sendStatus(200);
     } else {
       res.sendStatus(400);
