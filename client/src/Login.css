@@ -1,0 +1,68 @@
+.Login {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.LoginForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: rgb(60, 60, 60);
+  padding: 20px;
+  border-radius: 5px;
+  width: 250px;
+  height: 210px;
+  justify-content: space-between;
+}
+
+.LoginForm h1 {
+  margin: 0;
+}
+
+.LoginForm > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  gap: 20px;
+}
+
+.LoginForm > div > div {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 15px;
+}
+
+.LoginForm input {
+  background-color: grey;
+  border: 0px;
+  border-radius: 5px;
+  height: 30px;
+  padding-left: 5px;
+  color: white;
+}
+
+.LoginForm input:focus {
+  outline: 0;
+}
+
+.LoginForm button {
+  width: 50px;
+  padding: 5px;
+  background-color: grey;
+  border: 0px;
+  border-radius: 5px;
+  color: white;
+  width: max-content;
+}
+
+.LoginForm button:hover {
+  filter: brightness(80%);
+}
+
+.LoginForm button:active {
+  filter: brightness(60%);
+}

@@ -6,6 +6,7 @@
   flex-direction: column;
   align-content: center;
   align-items: center;
+  padding-top: 16px;
 }
 
 .TaskList > div {
@@ -32,7 +33,7 @@
   align-items: center;
 }
 
-button {
+.TaskList button {
   aspect-ratio: 1;
   height: 40px;
   display: flex;
@@ -43,11 +44,11 @@ button {
   border-radius: 5px;
 }
 
-button:hover {
+.TaskList button:hover {
   filter: brightness(80%);
 }
 
-button:active {
+.TaskList button:active {
   filter: brightness(60%);
 }
 
