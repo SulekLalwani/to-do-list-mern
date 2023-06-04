@@ -6,13 +6,13 @@ export default function Login() {
   return (
     <div className="Login">
       <form className="LoginForm">
-        <h1>Sign in</h1>
+        <h1>Log in</h1>
         <div>
           <div>
-            <input placeholder="Username" />
-            <input type="password" placeholder="Password" />
+            <input placeholder="Username" required="true" />
+            <input type="password" placeholder="Password" required="true" />
           </div>
-          <button>Sign in</button>
+          <button>Log in</button>
         </div>
       </form>
     </div>
