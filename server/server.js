@@ -73,4 +73,9 @@ app.delete("/", async (req, res) => {
   }
 });
 
+app.post("/signup", (req, res) => {
+  console.log(req.body);
+  res.sendStatus(200);
+});
+
 app.listen(5000);
