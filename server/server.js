@@ -20,6 +20,10 @@ const taskSchema = new mongoose.Schema({
 
 const Task = mongoose.model("tasks", taskSchema);
 
+const userSchema = new mongoose.Schema({ username: String, password: String });
+
+const User = mongoose.model("users", userSchema);
+
 app.get("/", async (req, res) => {
   try {
     const tasks = await Task.find({ task: { $exists: true } });
@@ -73,9 +77,16 @@ app.delete("/", async (req, res) => {
   }
 });
 
-app.post("/signup", (req, res) => {
-  console.log(req.body);
-  res.sendStatus(200);
+app.post("/signup", async (req, res) => {
+  if (req.body.username && req.body.password) {
+    await User.create({
+      username: req.body.username,
+      password: req.body.password,
+    });
+    res.sendStatus(201);
+  } else {
+    res.sendStatus(400);
+  }
 });
 
 app.listen(5000);
