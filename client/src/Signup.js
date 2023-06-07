@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 
 import "./Signup.css";
 
 export default function Signup() {
+  const [messages, setMessages] = useState([]);
+
   async function signUp(event) {
     event.preventDefault();
 
@@ -10,7 +12,7 @@ export default function Signup() {
     const password = event.target.elements.password.value;
     const repeatedPassword = event.target.elements.repeatedPassword.value;
 
-    await fetch("http://localhost:5000/signup", {
+    const response = await fetch("http://localhost:5000/signup", {
       method: "POST",
       headers: { "Content-type": "application/json" },
       body: JSON.stringify({
@@ -19,6 +21,11 @@ export default function Signup() {
         repeatedPassword: repeatedPassword,
       }),
     });
+
+    if (response.status === 400) {
+      const data = await response.json();
+      setMessages(data);
+    }
   }
 
   return (
@@ -41,6 +48,11 @@ export default function Signup() {
               name="repeatedPassword"
             />
           </div>
+          <ul className="Messages">
+            {messages.map((message) => (
+              <li>{message}</li>
+            ))}
+          </ul>
           <button>Sign up</button>
         </div>
       </form>

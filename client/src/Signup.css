@@ -66,3 +66,8 @@
 .SignupForm button:active {
   filter: brightness(60%);
 }
+
+.Messages {
+  color: rgb(237, 57, 57);
+  padding: 0;
+}
