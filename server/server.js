@@ -119,4 +119,9 @@ app.post("/signup", async (req, res) => {
   }
 });
 
+app.post("/login", (req, res) => {
+  console.log(req.body);
+  res.sendStatus(200);
+});
+
 app.listen(5000);
