@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
+const bcrypt = require("bcrypt");
 
 const app = express();
 
@@ -20,7 +21,10 @@ const taskSchema = new mongoose.Schema({
 
 const Task = mongoose.model("tasks", taskSchema);
 
-const userSchema = new mongoose.Schema({ username: String, password: String });
+const userSchema = new mongoose.Schema({
+  username: String,
+  passwordHash: String,
+});
 
 const User = mongoose.model("users", userSchema);
 
@@ -104,9 +108,10 @@ app.post("/signup", async (req, res) => {
   }
 
   if (messages.length == 0) {
+    const passwordHash = await bcrypt.hash(password, 12);
     await User.create({
       username: username,
-      password: password,
+      passwordHash: passwordHash,
     });
     res.sendStatus(201);
   } else {
