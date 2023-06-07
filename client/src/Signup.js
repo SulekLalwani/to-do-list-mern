@@ -1,9 +1,12 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import "./Signup.css";
 
 export default function Signup() {
   const [messages, setMessages] = useState([]);
+
+  const navigate = useNavigate();
 
   async function signUp(event) {
     event.preventDefault();
@@ -22,7 +25,9 @@ export default function Signup() {
       }),
     });
 
-    if (response.status === 400) {
+    if (response.status === 201) {
+      navigate("/login");
+    } else if (response.status === 400) {
       const data = await response.json();
       setMessages(data);
     }
