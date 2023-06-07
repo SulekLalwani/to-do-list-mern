@@ -78,14 +78,39 @@ app.delete("/", async (req, res) => {
 });
 
 app.post("/signup", async (req, res) => {
-  if (req.body.username && req.body.password) {
+  const username = req.body.username;
+  const password = req.body.password;
+  const repeatedPassword = req.body.repeatedPassword;
+
+  const messages = [];
+
+  if (username.length < 3) {
+    messages.push("Username is too short");
+  }
+  if (username.length > 15) {
+    messages.push("Username is too long");
+  }
+  if (await User.findOne({ username: username })) {
+    messages.push("Username is already taken");
+  }
+  if (password.length < 8) {
+    messages.push("Password is too short");
+  }
+  if (password.length > 128) {
+    messages.push("Password is too long");
+  }
+  if (password !== repeatedPassword) {
+    messages.push("Passwords do not match");
+  }
+
+  if (messages.length == 0) {
     await User.create({
-      username: req.body.username,
-      password: req.body.password,
+      username: username,
+      password: password,
     });
     res.sendStatus(201);
   } else {
-    res.sendStatus(400);
+    res.status(400).send(messages);
   }
 });
 
