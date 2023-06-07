@@ -119,9 +119,17 @@ app.post("/signup", async (req, res) => {
   }
 });
 
-app.post("/login", (req, res) => {
-  console.log(req.body);
-  res.sendStatus(200);
+app.post("/login", async (req, res) => {
+  const username = req.body.username;
+  const password = req.body.password;
+
+  const user = await User.findOne({ username: username });
+
+  if (user && (await bcrypt.compare(password, user.passwordHash))) {
+    res.sendStatus(200);
+  } else {
+    res.sendStatus(400);
+  }
 });
 
 app.listen(5000);
