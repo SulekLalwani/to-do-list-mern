@@ -1,9 +1,12 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import "./Login.css";
 
 export default function Login() {
   const [invalidCredentials, setInvalidCredentials] = useState(false);
+
+  const navigate = useNavigate();
 
   async function logIn(event) {
     event.preventDefault();
@@ -18,7 +21,9 @@ export default function Login() {
       credentials: "include",
     });
 
-    if (response.status === 400) {
+    if (response.status === 200) {
+      navigate("/");
+    } else if (response.status === 400) {
       setInvalidCredentials(true);
     }
   }
