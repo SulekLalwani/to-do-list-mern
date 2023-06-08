@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
+const session = require("express-session");
 
 const app = express();
 
@@ -10,7 +11,12 @@ app.use(express.json());
 app.use(
   cors({
     origin: "http://localhost:3000",
+    credentials: true,
   })
+);
+
+app.use(
+  session({ secret: "secret-key", saveUninitialized: false, resave: false })
 );
 
 mongoose.connect("mongodb://localhost/to-do-list-mern");
@@ -126,6 +132,7 @@ app.post("/login", async (req, res) => {
   const user = await User.findOne({ username: username });
 
   if (user && (await bcrypt.compare(password, user.passwordHash))) {
+    req.session.username = username;
     res.sendStatus(200);
   } else {
     res.sendStatus(400);

@@ -15,6 +15,7 @@ export default function Login() {
       method: "POST",
       headers: { "Content-type": "application/json" },
       body: JSON.stringify({ username: username, password: password }),
+      credentials: "include",
     });
 
     if (response.status === 400) {
