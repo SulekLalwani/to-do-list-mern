@@ -66,3 +66,9 @@
 .LoginForm button:active {
   filter: brightness(60%);
 }
+
+.Message {
+  color: rgb(237, 57, 57);
+  text-align: center;
+  margin: 0;
+}
