@@ -9,7 +9,9 @@ function TaskList() {
   const [invalidInput, setInvalidInput] = useState(false);
 
   useEffect(async () => {
-    const response = await fetch("http://localhost:5000/");
+    const response = await fetch("http://localhost:5000/", {
+      credentials: "include",
+    });
     const data = await response.json();
     setTasks(data.tasks);
   }, []);
@@ -46,11 +48,12 @@ function TaskList() {
       method: "POST",
       headers: { "Content-type": "application/json" },
       body: JSON.stringify({ newTask: newTaskInput.value }),
+      credentials: "include",
     });
 
     const data = await response.json();
 
-    if (response.status === 202) {
+    if (response.status === 201) {
       setTasks([...tasks, { _id: data.newTaskID, task: newTaskInput.value }]);
       newTaskInput.value = "";
       setAddingTask(false);
@@ -65,6 +68,7 @@ function TaskList() {
       method: "DELETE",
       headers: { "Content-type": "application/json" },
       body: JSON.stringify({ taskToDelete: tasks[index]._id }),
+      credentials: "include",
     });
 
     if (response.status === 200) {
@@ -100,6 +104,7 @@ function TaskList() {
       method: "PUT",
       headers: { "Content-type": "application/json" },
       body: JSON.stringify({ taskToEdit: tasks[index]._id, edit: edit }),
+      credentials: "include",
     });
 
     if (response.status === 200) {

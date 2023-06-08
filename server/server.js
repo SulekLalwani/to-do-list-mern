@@ -34,20 +34,28 @@ const userSchema = new mongoose.Schema({
 
 const User = mongoose.model("users", userSchema);
 
-app.get("/", async (req, res) => {
+function authenticate(req, res, next) {
+  if (req.session.username) {
+    next();
+  } else {
+    res.sendStatus(401);
+  }
+}
+
+app.get("/", authenticate, async (req, res) => {
   try {
     const tasks = await Task.find({ task: { $exists: true } });
-    res.json({ tasks: tasks });
+    res.status(200).json({ tasks: tasks });
   } catch {
     sendStatus(500);
   }
 });
 
-app.post("/", async (req, res) => {
+app.post("/", authenticate, async (req, res) => {
   try {
     if (req.body.newTask && req.body.newTask.length > 0) {
       const createdTask = await Task.create({ task: req.body.newTask });
-      res.status(202).send({ newTaskID: createdTask._id });
+      res.status(201).send({ newTaskID: createdTask._id });
     } else {
       res.sendStatus(400);
     }
@@ -56,7 +64,7 @@ app.post("/", async (req, res) => {
   }
 });
 
-app.put("/", async (req, res) => {
+app.put("/", authenticate, async (req, res) => {
   try {
     if (req.body.taskToEdit && req.body.edit && req.body.edit.length > 0) {
       await Task.updateOne(
@@ -74,7 +82,7 @@ app.put("/", async (req, res) => {
   }
 });
 
-app.delete("/", async (req, res) => {
+app.delete("/", authenticate, async (req, res) => {
   try {
     if (req.body.taskToDelete) {
       await Task.deleteOne({ _id: req.body.taskToDelete });
