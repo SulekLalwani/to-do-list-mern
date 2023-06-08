@@ -3,6 +3,7 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const session = require("express-session");
+const MongoStore = require("connect-mongo");
 
 const app = express();
 
@@ -16,7 +17,15 @@ app.use(
 );
 
 app.use(
-  session({ secret: "secret-key", saveUninitialized: false, resave: false })
+  session({
+    secret: "secret-key",
+    saveUninitialized: false,
+    resave: false,
+    store: MongoStore.create({
+      mongoUrl: "mongodb://localhost/to-do-list-mern",
+      stringify: false,
+    }),
+  })
 );
 
 mongoose.connect("mongodb://localhost/to-do-list-mern");
