@@ -87,7 +87,7 @@ function TaskList() {
     setEditingTask(newEditingTask);
     setAddingTask(false);
     setInvalidInput(false);
-    setEdit(tasks[index].task);
+    setEdit(tasks[index]);
   }
 
   function cancelEdit(index) {
@@ -122,7 +122,7 @@ function TaskList() {
         {tasks.map((task, index) => (
           <div className="task">
             <div style={{ display: editingTask[index] ? "none" : "flex" }}>
-              <p>{task.task}</p>
+              <p>{task}</p>
               <div>
                 <button className="editButton" onClick={() => editTask(index)}>
                   <i></i>

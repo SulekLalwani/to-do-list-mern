@@ -39,12 +39,14 @@ const Task = mongoose.model("tasks", taskSchema);
 const userSchema = new mongoose.Schema({
   username: String,
   passwordHash: String,
+  tasks: Array,
 });
 
 const User = mongoose.model("users", userSchema);
 
 function authenticate(req, res, next) {
   if (req.session.username) {
+    req.username = req.session.username;
     next();
   } else {
     res.sendStatus(401);
@@ -53,8 +55,8 @@ function authenticate(req, res, next) {
 
 app.get("/", authenticate, async (req, res) => {
   try {
-    const tasks = await Task.find({ task: { $exists: true } });
-    res.status(200).json({ tasks: tasks });
+    const user = await User.findOne({ username: req.username });
+    res.status(200).json({ tasks: user.tasks });
   } catch {
     sendStatus(500);
   }
