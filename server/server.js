@@ -30,12 +30,6 @@ app.use(
 
 mongoose.connect("mongodb://localhost/to-do-list-mern");
 
-const taskSchema = new mongoose.Schema({
-  task: String,
-});
-
-const Task = mongoose.model("tasks", taskSchema);
-
 const userSchema = new mongoose.Schema({
   username: String,
   passwordHash: String,
@@ -65,8 +59,11 @@ app.get("/", authenticate, async (req, res) => {
 app.post("/", authenticate, async (req, res) => {
   try {
     if (req.body.newTask && req.body.newTask.length > 0) {
-      const createdTask = await Task.create({ task: req.body.newTask });
-      res.status(201).send({ newTaskID: createdTask._id });
+      await User.updateOne(
+        { username: req.username },
+        { $push: { tasks: req.body.newTask } }
+      );
+      res.sendStatus(201);
     } else {
       res.sendStatus(400);
     }
@@ -77,11 +74,11 @@ app.post("/", authenticate, async (req, res) => {
 
 app.put("/", authenticate, async (req, res) => {
   try {
-    if (req.body.taskToEdit && req.body.edit && req.body.edit.length > 0) {
-      await Task.updateOne(
-        { _id: req.body.taskToEdit },
+    if (req.body.taskToEdit >= 0 && req.body.edit && req.body.edit.length > 0) {
+      await User.updateOne(
+        { username: req.username },
         {
-          $set: { task: req.body.edit },
+          $set: { [`tasks.${req.body.taskToEdit}`]: req.body.edit },
         }
       );
       res.sendStatus(200);
@@ -95,8 +92,15 @@ app.put("/", authenticate, async (req, res) => {
 
 app.delete("/", authenticate, async (req, res) => {
   try {
-    if (req.body.taskToDelete) {
-      await Task.deleteOne({ _id: req.body.taskToDelete });
+    if (req.body.taskToDelete >= 0) {
+      await User.updateOne(
+        { username: req.username },
+        { $unset: { [`tasks.${req.body.taskToDelete}`]: "" } }
+      );
+      await User.updateOne(
+        { username: req.username },
+        { $pull: { tasks: null } }
+      );
       res.sendStatus(200);
     } else {
       res.sendStatus(400);

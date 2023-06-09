@@ -51,10 +51,8 @@ function TaskList() {
       credentials: "include",
     });
 
-    const data = await response.json();
-
     if (response.status === 201) {
-      setTasks([...tasks, { _id: data.newTaskID, task: newTaskInput.value }]);
+      setTasks([...tasks, newTaskInput.value]);
       newTaskInput.value = "";
       setAddingTask(false);
       setInvalidInput(false);
@@ -67,7 +65,7 @@ function TaskList() {
     const response = await fetch("http://localhost:5000", {
       method: "DELETE",
       headers: { "Content-type": "application/json" },
-      body: JSON.stringify({ taskToDelete: tasks[index]._id }),
+      body: JSON.stringify({ taskToDelete: index }),
       credentials: "include",
     });
 
@@ -103,13 +101,13 @@ function TaskList() {
     const response = await fetch("http://localhost:5000", {
       method: "PUT",
       headers: { "Content-type": "application/json" },
-      body: JSON.stringify({ taskToEdit: tasks[index]._id, edit: edit }),
+      body: JSON.stringify({ taskToEdit: index, edit: edit }),
       credentials: "include",
     });
 
     if (response.status === 200) {
       const newTasks = [...tasks];
-      newTasks[index].task = edit;
+      newTasks[index] = edit;
       setTasks(newTasks);
     } else {
       setInvalidInput(true);
