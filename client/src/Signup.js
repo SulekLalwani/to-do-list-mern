@@ -53,7 +53,7 @@ export default function Signup() {
               name="repeatedPassword"
             />
           </div>
-          <ul className="Messages">
+          <ul className="Messages" hidden={!messages.length > 0}>
             {messages.map((message) => (
               <li>{message}</li>
             ))}
