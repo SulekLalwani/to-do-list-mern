@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 import "./Login.css";
 
@@ -48,6 +48,7 @@ export default function Login() {
           <button>Log in</button>
         </div>
       </form>
+      <Link to="/signup">Sign up</Link>
     </div>
   );
 }

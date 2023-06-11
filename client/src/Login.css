@@ -3,6 +3,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
+  gap: 50px;
 }
 
 .LoginForm {
@@ -65,6 +67,10 @@
 
 .LoginForm button:active {
   filter: brightness(60%);
+}
+
+.Login a {
+  color: white;
 }
 
 .Message {

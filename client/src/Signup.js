@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 import "./Signup.css";
 
@@ -61,6 +61,7 @@ export default function Signup() {
           <button>Sign up</button>
         </div>
       </form>
+      <Link to="/login">Log in</Link>
     </div>
   );
 }

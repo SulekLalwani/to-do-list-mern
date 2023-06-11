@@ -3,6 +3,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
+  gap: 50px;
 }
 
 .SignupForm {
@@ -65,6 +67,10 @@
 
 .SignupForm button:active {
   filter: brightness(60%);
+}
+
+.Signup a {
+  color: white;
 }
 
 .Messages {
