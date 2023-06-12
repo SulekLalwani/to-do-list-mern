@@ -1,5 +1,12 @@
 .TaskList {
   display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.list {
+  width: 100%;
+  display: flex;
   flex-wrap: wrap;
   justify-content: center;
   gap: 55px;
@@ -9,7 +16,7 @@
   padding-top: 16px;
 }
 
-.TaskList > div {
+.list > div {
   width: 95%;
   display: flex;
   flex-wrap: wrap;
@@ -33,7 +40,7 @@
   align-items: center;
 }
 
-.TaskList button {
+.list button {
   aspect-ratio: 1;
   height: 40px;
   display: flex;
@@ -44,11 +51,11 @@
   border-radius: 5px;
 }
 
-.TaskList button:hover {
+.list button:hover {
   filter: brightness(80%);
 }
 
-.TaskList button:active {
+.list button:active {
   filter: brightness(60%);
 }
 
@@ -134,4 +141,38 @@
 .task > form > div {
   display: flex;
   gap: 10px;
+}
+
+.logoutButton {
+  margin: 0;
+  display: flex;
+  justify-content: right;
+  width: 100%;
+  padding-top: 20px;
+  padding-right: 15px;
+  box-sizing: border-box;
+}
+
+.logoutButton button {
+  aspect-ratio: 1;
+  border: 0;
+  background-color: rgba(0, 0, 0, 0);
+  filter: invert(100%);
+  padding: 0;
+  height: 30px;
+}
+
+.logoutButton button:hover {
+  filter: invert(100%) brightness(80%);
+}
+
+.logoutButton button:active {
+  filter: invert(100%) brightness(60%);
+}
+
+.logoutButton button i {
+  height: 100%;
+  margin: 0;
+  font-size: 15px;
+  content: url(./icons/log-out.svg);
 }

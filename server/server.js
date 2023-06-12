@@ -162,4 +162,10 @@ app.post("/login", async (req, res) => {
   }
 });
 
+app.delete("/logout", authenticate, (req, res) => {
+  req.session.destroy();
+  res.clearCookie("connect.sid");
+  res.sendStatus(200);
+});
+
 app.listen(5000);

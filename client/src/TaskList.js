@@ -1,19 +1,25 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./TaskList.css";
 
 function TaskList() {
+  const navigate = useNavigate();
   const [tasks, setTasks] = useState([]);
   const [edit, setEdit] = useState("");
   const [addingTask, setAddingTask] = useState(false);
   const [editingTask, setEditingTask] = useState([]);
   const [invalidInput, setInvalidInput] = useState(false);
 
-  useEffect(async () => {
-    const response = await fetch("http://localhost:5000/", {
-      credentials: "include",
-    });
-    const data = await response.json();
-    setTasks(data.tasks);
+  useEffect(() => {
+    async function fetchData() {
+      const response = await fetch("http://localhost:5000/", {
+        credentials: "include",
+      });
+      const data = await response.json();
+      setTasks(data.tasks);
+    }
+
+    fetchData();
   }, []);
 
   useEffect(() => {
@@ -114,40 +120,84 @@ function TaskList() {
     }
   }
 
+  async function logOut() {
+    const response = await fetch("http://localhost:5000/logout", {
+      method: "DELETE",
+      credentials: "include",
+    });
+    if (response.status === 200) {
+      navigate("/login");
+    }
+  }
+
   return (
     <div className="TaskList">
-      <div>
-        {tasks.map((task, index) => (
-          <div className="task">
-            <div style={{ display: editingTask[index] ? "none" : "flex" }}>
-              <p>{task}</p>
-              <div>
-                <button className="editButton" onClick={() => editTask(index)}>
-                  <i></i>
-                </button>{" "}
-                <button
-                  className="deleteButton"
-                  onClick={() => deleteTask(index)}
-                >
-                  <i></i>
-                </button>
+      <div className="logoutButton">
+        <button onClick={logOut}>
+          <i></i>
+        </button>
+      </div>
+      <div className="list">
+        <div>
+          {tasks.map((task, index) => (
+            <div className="task">
+              <div style={{ display: editingTask[index] ? "none" : "flex" }}>
+                <p>{task}</p>
+                <div>
+                  <button
+                    className="editButton"
+                    onClick={() => editTask(index)}
+                  >
+                    <i></i>
+                  </button>{" "}
+                  <button
+                    className="deleteButton"
+                    onClick={() => deleteTask(index)}
+                  >
+                    <i></i>
+                  </button>
+                </div>
               </div>
-            </div>
-            <form
-              onSubmit={(event) => {
-                acceptEdit(event, index);
-              }}
-              style={{ display: !editingTask[index] ? "none" : "flex" }}
-            >
-              <input
-                value={edit}
-                onChange={(event) => {
-                  setEdit(event.target.value);
+              <form
+                onSubmit={(event) => {
+                  acceptEdit(event, index);
                 }}
-                name="editTask"
+                style={{ display: !editingTask[index] ? "none" : "flex" }}
+              >
+                <input
+                  value={edit}
+                  onChange={(event) => {
+                    setEdit(event.target.value);
+                  }}
+                  name="editTask"
+                  placeholder="Enter task"
+                  style={{ outline: invalidInput ? "1px red solid" : "none" }}
+                ></input>{" "}
+                <div>
+                  <button className="acceptButton">
+                    <i></i>
+                  </button>{" "}
+                  <button
+                    className="cancelButton"
+                    type="button"
+                    onClick={() => cancelEdit(index)}
+                  >
+                    <i></i>
+                  </button>
+                </div>
+              </form>
+            </div>
+          ))}
+          <div
+            style={{ display: !addingTask ? "none" : "flex" }}
+            className="task"
+          >
+            <form onSubmit={acceptAddition}>
+              <input
+                name="newTask"
                 placeholder="Enter task"
                 style={{ outline: invalidInput ? "1px red solid" : "none" }}
-              ></input>{" "}
+              ></input>
               <div>
                 <button className="acceptButton">
                   <i></i>
@@ -155,45 +205,21 @@ function TaskList() {
                 <button
                   className="cancelButton"
                   type="button"
-                  onClick={() => cancelEdit(index)}
+                  onClick={() => {
+                    setAddingTask(false);
+                    setInvalidInput(false);
+                  }}
                 >
                   <i></i>
                 </button>
               </div>
             </form>
           </div>
-        ))}
-        <div
-          style={{ display: !addingTask ? "none" : "flex" }}
-          className="task"
-        >
-          <form onSubmit={acceptAddition}>
-            <input
-              name="newTask"
-              placeholder="Enter task"
-              style={{ outline: invalidInput ? "1px red solid" : "none" }}
-            ></input>
-            <div>
-              <button className="acceptButton">
-                <i></i>
-              </button>{" "}
-              <button
-                className="cancelButton"
-                type="button"
-                onClick={() => {
-                  setAddingTask(false);
-                  setInvalidInput(false);
-                }}
-              >
-                <i></i>
-              </button>
-            </div>
-          </form>
         </div>
+        <button onClick={addTask} className="addButton">
+          <i></i>
+        </button>
       </div>
-      <button onClick={addTask} className="addButton">
-        <i></i>
-      </button>
     </div>
   );
 }
