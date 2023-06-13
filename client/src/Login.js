@@ -1,12 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
-
+import { LoggedInContext } from "./App";
 import "./Login.css";
 
 export default function Login() {
   const [invalidCredentials, setInvalidCredentials] = useState(false);
+  const [loggedIn, setLoggedIn] = useContext(LoggedInContext);
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (loggedIn) {
+      navigate("/");
+    }
+  }, [loggedIn]);
 
   async function logIn(event) {
     event.preventDefault();
@@ -22,7 +29,7 @@ export default function Login() {
     });
 
     if (response.status === 200) {
-      navigate("/");
+      setLoggedIn(true);
     } else if (response.status === 400) {
       setInvalidCredentials(true);
     }

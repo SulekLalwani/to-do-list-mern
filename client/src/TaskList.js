@@ -1,8 +1,10 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { LoggedInContext } from "./App";
 import "./TaskList.css";
 
 function TaskList() {
+  const [loggedIn, setLoggedIn] = useContext(LoggedInContext);
   const navigate = useNavigate();
   const [tasks, setTasks] = useState([]);
   const [edit, setEdit] = useState("");
@@ -19,8 +21,12 @@ function TaskList() {
       setTasks(data.tasks);
     }
 
-    fetchData();
-  }, []);
+    if (loggedIn) {
+      fetchData();
+    } else {
+      navigate("/login");
+    }
+  }, [loggedIn]);
 
   useEffect(() => {
     const newEditingTask = [];
@@ -126,7 +132,7 @@ function TaskList() {
       credentials: "include",
     });
     if (response.status === 200) {
-      navigate("/login");
+      setLoggedIn(false);
     }
   }
 

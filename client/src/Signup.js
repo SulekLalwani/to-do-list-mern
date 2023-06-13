@@ -1,12 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useNavigate, Link } from "react-router-dom";
-
+import { LoggedInContext } from "./App";
 import "./Signup.css";
 
 export default function Signup() {
   const [messages, setMessages] = useState([]);
+  const [loggedIn] = useContext(LoggedInContext);
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (loggedIn) {
+      navigate("/");
+    }
+  }, []);
 
   async function signUp(event) {
     event.preventDefault();
