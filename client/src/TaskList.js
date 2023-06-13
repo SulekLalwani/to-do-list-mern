@@ -138,7 +138,11 @@ function TaskList() {
 
   return (
     <div className="TaskList">
-      <div className="logoutButton">
+      <div className="topBar">
+        <div>
+          <i></i>
+          <p>{localStorage.getItem("username")}</p>
+        </div>
         <button onClick={logOut}>
           <i></i>
         </button>

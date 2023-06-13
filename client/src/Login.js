@@ -30,6 +30,7 @@ export default function Login() {
 
     if (response.status === 200) {
       setLoggedIn(true);
+      localStorage.setItem("username", username);
     } else if (response.status === 400) {
       setInvalidCredentials(true);
     }

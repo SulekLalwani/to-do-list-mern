@@ -143,17 +143,35 @@
   gap: 10px;
 }
 
-.logoutButton {
+.topBar {
   margin: 0;
   display: flex;
-  justify-content: right;
+  justify-content: space-between;
   width: 100%;
   padding-top: 20px;
   padding-right: 15px;
+  padding-left: 15px;
   box-sizing: border-box;
 }
 
-.logoutButton button {
+.topBar div {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.topBar div p {
+  margin: 0;
+  font-size: 20px;
+}
+
+.topBar div i {
+  height: 100%;
+  filter: invert(100%);
+  content: url(./icons/user.svg);
+}
+
+.topBar button {
   aspect-ratio: 1;
   border: 0;
   background-color: rgba(0, 0, 0, 0);
@@ -162,17 +180,15 @@
   height: 30px;
 }
 
-.logoutButton button:hover {
+.topBar button:hover {
   filter: invert(100%) brightness(80%);
 }
 
-.logoutButton button:active {
+.topBar button:active {
   filter: invert(100%) brightness(60%);
 }
 
-.logoutButton button i {
+.topBar button i {
   height: 100%;
-  margin: 0;
-  font-size: 15px;
   content: url(./icons/log-out.svg);
 }
